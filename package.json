@@ -1,0 +1,26 @@
+{
+  "name": "coupon-service",
+  "version": "1.0.0",
+  "main": "src/main.ts",
+  "author": "Milito",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node src/main.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "serve": "node dist/main.js",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm": "./node_modules/typeorm/cli.js",
+    "add-migration": "ts-node ./node_modules/typeorm/cli.js migration:generate -n"
+  },
+  "dependencies": {
+    "@types/node": "^22.4.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}
