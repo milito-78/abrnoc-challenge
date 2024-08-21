@@ -19,8 +19,16 @@
     "add-migration": "ts-node ./node_modules/typeorm/cli.js migration:generate -n"
   },
   "dependencies": {
+    "@types/dotenv": "^8.2.0",
     "@types/node": "^22.4.1",
+    "awilix": "^10.0.2",
+    "dotenv": "^16.4.5",
+    "mysql": "^2.18.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
+  },
+  "devDependencies": {
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20"
   }
 }
