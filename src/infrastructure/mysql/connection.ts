@@ -1,10 +1,10 @@
-import {DataSource} from "typeorm";
-import {IDatabaseConfig} from "../../app.config";
+import { DataSource } from 'typeorm';
+import { IDatabaseConfig } from '../../app.config';
 
-let connection : DataSource|null = null;
+let connection: DataSource | null = null;
 
 export function createDataSource(config: IDatabaseConfig): DataSource {
-  if (connection === null){
+  if (connection === null) {
     connection = new DataSource({
       type: 'mysql',
       host: config.host,
@@ -23,5 +23,4 @@ export function createDataSource(config: IDatabaseConfig): DataSource {
   return connection;
 }
 
-
-export const DATABASE_DATASOURCE_TOKEN = "database-datasource-token";
+export const DATABASE_DATASOURCE_TOKEN = 'database-datasource-token';
