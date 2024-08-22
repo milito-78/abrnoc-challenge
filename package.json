@@ -26,11 +26,11 @@
     "mysql": "^2.18.1",
     "ts-node": "^10.9.2",
     "typeorm-extension": "^3.6.1",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
     "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.20",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.8.8"

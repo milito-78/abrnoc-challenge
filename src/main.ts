@@ -1,28 +1,23 @@
 import dotenv from 'dotenv';
+import { containerResolve, start } from './app.module';
+import { AccessTokenService } from './auth/services/access-token.service';
 import {
-  APP_CONFIG_TOKEN,
-  DATABASE_CONFIG_TOKEN,
-  IDatabaseConfig,
-  registerConfig,
-  registerDatabaseConfig,
-} from './app.config';
-import {
-  createDataSource,
-  DATABASE_DATASOURCE_TOKEN,
-} from './infrastructure/mysql/connection';
-import { asFunction, asValue, AwilixContainer, createContainer } from 'awilix';
+  ACCESS_TOKEN_DATABASE_PROVIDER,
+  IAccessTokenReader,
+  IAccessTokenWriter,
+} from './auth/database/providers/access-token.database.provider';
 
 dotenv.config();
-const container = createContainer();
 
-container
-  .register(APP_CONFIG_TOKEN, asValue(registerConfig()))
-  .register(DATABASE_CONFIG_TOKEN, asValue(registerDatabaseConfig()))
-  .register(
-    DATABASE_DATASOURCE_TOKEN,
-    asFunction(createDataSource)
-      .singleton()
-      .inject((container: AwilixContainer) =>
-        container.resolve<IDatabaseConfig>(DATABASE_CONFIG_TOKEN),
-      ),
+async function main() {
+  await start();
+  const servive = new AccessTokenService(
+    containerResolve<IAccessTokenReader>(ACCESS_TOKEN_DATABASE_PROVIDER),
+    containerResolve<IAccessTokenWriter>(ACCESS_TOKEN_DATABASE_PROVIDER),
   );
+
+  const result = await servive.verify('toke');
+  console.log(result);
+}
+
+main();

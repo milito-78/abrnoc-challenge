@@ -1,23 +1,26 @@
 import { DataSource } from 'typeorm';
 import { IDatabaseConfig } from '../../app.config';
+import { TokenEntity } from '../../auth/database/mysql/schemas/access-token.schema';
 
 let connection: DataSource | null = null;
 
-export function createDataSource(config: IDatabaseConfig): DataSource {
+export async function createDataSource(
+  config: IDatabaseConfig,
+): Promise<DataSource> {
   if (connection === null) {
-    connection = new DataSource({
+    connection = await new DataSource({
       type: 'mysql',
       host: config.host,
       port: config.port,
       username: config.username,
       password: config.password,
       database: config.database,
-
       synchronize: false, // Set to false in production
-      /*logging: false,
-      entities: ['dist/!**!/!*.entity.js'], // Replace with your entity paths
-      migrations: ['dist/migrations/!*.js'], // Replace with your migrations paths*/
-    });
+      logging: true,
+      entities: [TokenEntity],
+    }).initialize();
+
+    console.log(connection.isInitialized);
   }
 
   return connection;
