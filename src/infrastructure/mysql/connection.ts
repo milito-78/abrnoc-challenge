@@ -1,6 +1,7 @@
 import { DataSource } from 'typeorm';
 import { IDatabaseConfig } from '../../app.config';
 import { TokenEntity } from '../../auth/database/mysql/schemas/access-token.schema';
+import { UserEntity } from '../../users/database/mysql/schemas/users.schema';
 
 let connection: DataSource | null = null;
 
@@ -17,7 +18,7 @@ export async function createDataSource(
       database: config.database,
       synchronize: false, // Set to false in production
       logging: true,
-      entities: [TokenEntity],
+      entities: [TokenEntity, UserEntity],
     }).initialize();
 
     console.log(connection.isInitialized);

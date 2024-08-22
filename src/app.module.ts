@@ -20,6 +20,9 @@ import { ACCESS_TOKEN_DATABASE_PROVIDER } from './auth/database/providers/access
 import { AccessTokenMysqlRepository } from './auth/database/mysql/access-token.mysql.database';
 import { TokenEntity } from './auth/database/mysql/schemas/access-token.schema';
 import { DataSource } from 'typeorm';
+import { USERS_DATABASE_PROVIDER } from './users/database/providers/users.provider';
+import { UsersMysqlRepository } from './users/database/mysql/users.mysql';
+import { UserEntity } from './users/database/mysql/schemas/users.schema';
 
 const container = createContainer();
 
@@ -51,6 +54,16 @@ export async function registerDb() {
           container
             .resolve<DataSource>(DATABASE_DATASOURCE_TOKEN)
             .getRepository(TokenEntity),
+        ),
+    )
+    .register(
+      USERS_DATABASE_PROVIDER,
+      asClass(UsersMysqlRepository)
+        .singleton()
+        .inject((c) =>
+          container
+            .resolve<DataSource>(DATABASE_DATASOURCE_TOKEN)
+            .getRepository(UserEntity),
         ),
     );
 }
