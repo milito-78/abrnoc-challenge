@@ -23,6 +23,8 @@ import { DataSource } from 'typeorm';
 import { USERS_DATABASE_PROVIDER } from './users/database/providers/users.provider';
 import { UsersMysqlRepository } from './users/database/mysql/users.mysql';
 import { UserEntity } from './users/database/mysql/schemas/users.schema';
+import { SERVERS_DATABASE_PROVIDER } from './servers/database/providers/servers.provider';
+import { ServersArrayRepository } from './servers/database/array/servers.array';
 
 const container = createContainer();
 
@@ -65,6 +67,20 @@ export async function registerDb() {
             .resolve<DataSource>(DATABASE_DATASOURCE_TOKEN)
             .getRepository(UserEntity),
         ),
+    )
+    .register(
+      USERS_DATABASE_PROVIDER,
+      asClass(UsersMysqlRepository)
+        .singleton()
+        .inject((c) =>
+          container
+            .resolve<DataSource>(DATABASE_DATASOURCE_TOKEN)
+            .getRepository(UserEntity),
+        ),
+    )
+    .register(
+      SERVERS_DATABASE_PROVIDER,
+      asClass(ServersArrayRepository).singleton(),
     );
 }
 
