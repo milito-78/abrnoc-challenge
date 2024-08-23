@@ -1,22 +1,25 @@
 import dotenv from 'dotenv';
 import { containerResolve, start } from './app.module';
-import { AccessTokenService } from './auth/services/access-token.service';
+import { CouponsService } from './coupons/services/coupons.service';
 import {
-  ACCESS_TOKEN_DATABASE_PROVIDER,
-  IAccessTokenReader,
-  IAccessTokenWriter,
-} from './auth/database/providers/access-token.database.provider';
+  COUPONS_DATABASE_PROVIDER,
+  ICouponsReader,
+  ICouponsWriter,
+} from './coupons/database/providers/coupons.provider';
+import Redlock from 'redlock';
+import { REDIS_LOCKER_TOKEN } from './infrastructure/redis/lock';
 
 dotenv.config();
 
 async function main() {
   await start();
-  const servive = new AccessTokenService(
-    containerResolve<IAccessTokenReader>(ACCESS_TOKEN_DATABASE_PROVIDER),
-    containerResolve<IAccessTokenWriter>(ACCESS_TOKEN_DATABASE_PROVIDER),
+  const servive = new CouponsService(
+    containerResolve<ICouponsReader>(COUPONS_DATABASE_PROVIDER),
+    containerResolve<ICouponsWriter>(COUPONS_DATABASE_PROVIDER),
+    containerResolve<Redlock>(REDIS_LOCKER_TOKEN),
   );
 
-  const result = await servive.verify('toke');
+  const result = await servive.getByCode('code');
   console.log(result);
 }
 

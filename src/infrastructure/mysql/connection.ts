@@ -2,6 +2,8 @@ import { DataSource } from 'typeorm';
 import { IDatabaseConfig } from '../../app.config';
 import { TokenEntity } from '../../auth/database/mysql/schemas/access-token.schema';
 import { UserEntity } from '../../users/database/mysql/schemas/users.schema';
+import { CouponsEntity } from '../../coupons/database/mysql/schemas/coupons.schema';
+import { CouponUsersEntity } from '../../coupons/database/mysql/schemas/coupon-user.schema';
 
 let connection: DataSource | null = null;
 
@@ -18,7 +20,7 @@ export async function createDataSource(
       database: config.database,
       synchronize: false, // Set to false in production
       logging: true,
-      entities: [TokenEntity, UserEntity],
+      entities: [TokenEntity, UserEntity, CouponsEntity, CouponUsersEntity],
     }).initialize();
 
     console.log(connection.isInitialized);

@@ -27,6 +27,7 @@ export function registerDatabaseConfig(): IDatabaseConfig {
 
 export interface IConfig {
   name: string;
+  loggLevel: string;
 }
 
 export const APP_CONFIG_TOKEN = 'app-config-token';
@@ -34,5 +35,27 @@ export const APP_CONFIG_TOKEN = 'app-config-token';
 export function registerConfig(): IConfig {
   return {
     name: process.env.APP_NAME ?? '',
+    loggLevel: process.env.LOG_LEVEL ?? 'info',
   };
 }
+
+export interface IRedisConfig {
+  host: string;
+  auth?: string;
+  db: number;
+}
+
+export function registerRedisConfig(): IRedisConfig {
+  let db = 0;
+  if (process.env.REDIS_DB !== undefined) {
+    db = Number(process.env.REDIS_DB);
+  }
+
+  return {
+    host: process.env.REDIS_HOST ?? 'localhost:6379',
+    auth: process.env.REDIS_PASSWORD,
+    db: db,
+  };
+}
+
+export const REDIS_CONFIG_TOKEN = 'redis-config-token';
