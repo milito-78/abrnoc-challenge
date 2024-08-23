@@ -10,6 +10,7 @@ import {
 import { CouponsEntity } from './coupons.schema';
 
 @Entity()
+@Index('used_unique', ['userId', 'couponId'], { unique: true })
 export class CouponUsersEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;

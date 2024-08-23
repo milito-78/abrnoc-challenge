@@ -6,7 +6,6 @@ import { Err, Ok, Result } from '../../common/result';
 import { Server } from '../../domains/server.domain';
 import { ListInterface } from '../../common/interfaces/list.interface';
 import { GenericErrorCode } from '../../common/errors/generic-error';
-import { User } from '../../domains/user.domain';
 
 export class ServersService {
   constructor(

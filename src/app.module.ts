@@ -1,10 +1,4 @@
-import {
-  asClass,
-  asFunction,
-  asValue,
-  AwilixContainer,
-  createContainer,
-} from 'awilix';
+import { asClass, asValue, createContainer } from 'awilix';
 import {
   APP_CONFIG_TOKEN,
   DATABASE_CONFIG_TOKEN,
