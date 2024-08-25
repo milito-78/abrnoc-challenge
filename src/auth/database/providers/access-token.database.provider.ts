@@ -9,6 +9,7 @@ export interface IAccessTokenReader {
 
 export interface IAccessTokenWriter {
   store(token: IAccessToken): Promise<AccessToken>;
+  deleteByToken(token: string): Promise<boolean>;
 }
 
 export interface IAccessTokenProvider

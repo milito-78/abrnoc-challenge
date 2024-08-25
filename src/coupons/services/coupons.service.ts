@@ -6,6 +6,7 @@ import { Err, Ok, Result } from '../../common/result';
 import { Coupon } from '../../domains/coupon.domain';
 import { GenericErrorCode } from '../../common/errors/generic-error';
 import Redlock from 'redlock';
+import { ListInterface } from '../../common/interfaces/list.interface';
 
 export class CouponsService {
   constructor(
@@ -14,13 +15,22 @@ export class CouponsService {
     private locker: Redlock,
   ) {}
 
+  async listForUser(userId: string): Promise<Result<ListInterface<Coupon>>> {
+    const list = await this.couponReader.listForUser(userId);
+    return Ok<ListInterface<Coupon>>(list);
+  }
+
   async getByCode(code: string): Promise<Result<Coupon>> {
     const result = await this.couponReader.getByCode(code);
     if (!result) return Err('record not found', GenericErrorCode.NOT_FOUND);
     return Ok<Coupon>(result);
   }
 
-  async useCodeByUser(code: string, userId: string): Promise<Result<boolean>> {
+  async useCodeByUser(
+    code: string,
+    userId: string,
+    serverId: string,
+  ): Promise<Result<boolean>> {
     const coupon = await this.couponReader.getByCode(code);
     if (!coupon) return Err('record not found', GenericErrorCode.NOT_FOUND);
 
@@ -47,7 +57,7 @@ export class CouponsService {
 
     let result = false;
     try {
-      result = await this.couponWriter.useItByUser(coupon.id, userId);
+      result = await this.couponWriter.useItByUser(coupon.id, userId, serverId);
     } catch (error) {
       return Err('internal error', GenericErrorCode.INTERNAL);
     } finally {

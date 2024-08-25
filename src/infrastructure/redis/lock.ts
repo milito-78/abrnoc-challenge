@@ -10,8 +10,9 @@ export function createRedisClient(config: IRedisConfig): Client {
 
   connection = new Client({
     host: config.host,
-    password: config.auth,
+    port: config.port,
     db: config.db,
+    connectTimeout: 10000,
   });
 
   return connection;

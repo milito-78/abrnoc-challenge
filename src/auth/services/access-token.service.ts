@@ -38,6 +38,11 @@ export class AccessTokenService {
     return Ok<AccessToken>(result);
   }
 
+  async logout(token: string): Promise<Result<boolean>> {
+    const result = await this.tokenWriter.deleteByToken(token);
+    return Ok<boolean>(result);
+  }
+
   #generateToken(length = 60): string {
     const characters =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

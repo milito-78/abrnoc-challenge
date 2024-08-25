@@ -7,10 +7,15 @@ export interface ICouponsReader {
   list(): Promise<ListInterface<Coupon>>;
   doesUserUsedBefore(couponId: string, userId: string): Promise<boolean>;
   getCapacity(couponId: string): Promise<number>;
+  listForUser(userId: string): Promise<ListInterface<Coupon>>;
 }
 
 export interface ICouponsWriter {
-  useItByUser(couponId: string, userId: string): Promise<boolean>;
+  useItByUser(
+    couponId: string,
+    userId: string,
+    serverId: string,
+  ): Promise<boolean>;
 }
 
 export interface ICouponsProvider extends ICouponsReader, ICouponsWriter {}

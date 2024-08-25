@@ -34,11 +34,11 @@ export class TokenEntity {
 
   static toDomain(token: TokenEntity): AccessToken {
     return {
-      createdAt: token.updatedAt,
-      expiredAt: token.createdAt,
+      createdAt: token.createdAt,
+      expiredAt: token.expiredAt,
       id: String(token.id),
       token: token.token,
-      updatedAt: undefined,
+      updatedAt: token.updatedAt,
       userId: String(token.userId),
     };
   }

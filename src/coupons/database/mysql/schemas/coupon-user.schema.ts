@@ -24,6 +24,9 @@ export class CouponUsersEntity {
   @Column({ type: 'int', nullable: false })
   usedCount: number;
 
+  @Column({ type: 'bigint', nullable: true })
+  serverId?: number;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 

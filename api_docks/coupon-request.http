@@ -1,0 +1,13 @@
+### Get coupon list
+GET http://localhost:3000/v1/coupons
+Authorization: Bearer dsahgetyfgtuewfewhfuiwefd
+
+### Use Coupon
+POST http://localhost:3000/v1/coupons
+Content-Type: application/json
+Authorization: Bearer dsahgetyfgtuewfewhfuiwefd
+
+{
+  "couponCode":"gsasks",
+  "serverSlug" : "server-one"
+}

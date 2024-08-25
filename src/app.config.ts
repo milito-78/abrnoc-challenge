@@ -27,6 +27,7 @@ export function registerDatabaseConfig(): IDatabaseConfig {
 
 export interface IConfig {
   name: string;
+  httpPort: number;
   loggLevel: string;
 }
 
@@ -36,11 +37,13 @@ export function registerConfig(): IConfig {
   return {
     name: process.env.APP_NAME ?? '',
     loggLevel: process.env.LOG_LEVEL ?? 'info',
+    httpPort: Number(process.env.HTTP_PORT ?? '3000'),
   };
 }
 
 export interface IRedisConfig {
   host: string;
+  port: number;
   auth?: string;
   db: number;
 }
@@ -52,7 +55,8 @@ export function registerRedisConfig(): IRedisConfig {
   }
 
   return {
-    host: process.env.REDIS_HOST ?? 'localhost:6379',
+    host: process.env.REDIS_HOST ?? 'localhost',
+    port: Number(process.env.REDIS_PORT ?? '6379'),
     auth: process.env.REDIS_PASSWORD,
     db: db,
   };

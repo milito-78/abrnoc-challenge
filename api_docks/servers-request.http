@@ -1,0 +1,2 @@
+### Get servers list
+GET http://localhost:3000/v1/servers

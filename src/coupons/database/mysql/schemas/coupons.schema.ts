@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { Coupon } from '../../../../domains/coupon.domain';
 import { CouponUsersEntity } from './coupon-user.schema';
+import { CouponTypeEnum } from '../../../../domains/enums/coupon-type.enum';
 
 @Entity()
 @Index('code_unique', ['code'], { unique: true })
@@ -56,8 +57,8 @@ export class CouponsEntity {
       code: coupon.code,
       title: coupon.title,
       totalCount: coupon.totalCount,
-      typeId: coupon.typeId,
-      typeableId: coupon.typeableId,
+      typeId: Number(coupon.typeId) as CouponTypeEnum,
+      typeableId: String(coupon.typeableId),
       usedCount: coupon.usedCount,
       updatedAt: coupon.updatedAt,
       createdAt: coupon.createdAt,

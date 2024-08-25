@@ -22,4 +22,12 @@ export class AccessTokenMysqlRepository implements IAccessTokenProvider {
     const result = await this.repository.save(TokenEntity.fromDomain(token));
     return TokenEntity.toDomain(result);
   }
+
+  async deleteByToken(token: string): Promise<boolean> {
+    const result = await this.repository.delete({
+      token: token,
+    });
+
+    return !!result.affected;
+  }
 }

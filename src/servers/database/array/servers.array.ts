@@ -60,4 +60,12 @@ export class ServersArrayRepository implements IServersProvider {
       data: this._lists.map<Server>((item) => ServerEntity.toDomain(item)),
     };
   }
+
+  async listById(serverIds: string[]): Promise<ListInterface<Server>> {
+    return {
+      data: this._lists
+        .filter((serve) => serverIds.includes(String(serve.id)))
+        .map<Server>((item) => ServerEntity.toDomain(item)),
+    };
+  }
 }

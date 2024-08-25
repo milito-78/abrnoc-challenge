@@ -1,0 +1,24 @@
+### Register user
+POST http://localhost:3000/v1/auth/register
+Content-Type: application/json
+
+{
+  "name": "hiss",
+  "email": "emails@nam.co",
+  "password": "mM1@purahmadXx11@"
+}
+
+### Login user
+POST http://localhost:3000/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "emails@nam.co",
+  "password": "mM1@purahmadXx11@"
+}
+
+
+### Logout user
+DELETE http://localhost:3000/v1/auth/logout
+Content-Type: application/json
+Authorization: Bearer dsahgetyfgtuewfewhfuiwefd

@@ -3,9 +3,13 @@ export enum CouponTypeEnum {
   Server,
 }
 
-export function tryFromValue(value: number): CouponTypeEnum {
+export function getTitleFromValue(value: CouponTypeEnum): string {
   switch (value) {
     case CouponTypeEnum.Price:
-      return CouponTypeEnum.Price;
+      return 'price';
+    case CouponTypeEnum.Server:
+      return 'server';
+    default:
+      return 'unknown';
   }
 }

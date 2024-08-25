@@ -25,4 +25,10 @@ export class ServersService {
 
     return Ok<Server>(result);
   }
+
+  async listById(serverIds: string[]): Promise<Result<ListInterface<Server>>> {
+    return Ok<ListInterface<Server>>(
+      await this.serversRead.listById(serverIds),
+    );
+  }
 }

@@ -86,7 +86,7 @@ export async function registerDb() {
     )
     .register(
       SERVERS_DATABASE_PROVIDER,
-      asClass(ServersArrayRepository).singleton(),
+      asClass(ServersArrayRepository).singleton().setInjectionMode('CLASSIC'),
     )
     .register(
       COUPONS_DATABASE_PROVIDER,
