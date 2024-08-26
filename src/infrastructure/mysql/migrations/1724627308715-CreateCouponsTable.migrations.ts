@@ -4,6 +4,8 @@ import {
   Table,
   TableForeignKey,
 } from 'typeorm';
+import { CouponsEntity } from '../../../coupons/database/mysql/schemas/coupons.schema';
+import { CouponTypeEnum } from '../../../domains/enums/coupon-type.enum';
 
 export class CreateCouponsTable1724627308715 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -76,6 +78,44 @@ export class CreateCouponsTable1724627308715 implements MigrationInterface {
         onDelete: 'NO ACTION',
       }),
     );
+
+    await queryRunner.manager
+      .createQueryBuilder()
+      .insert()
+      .into(CouponsEntity)
+      .values([
+        {
+          title: 'First coupon',
+          code: 'frst1',
+          typeId: CouponTypeEnum.Price,
+          amount: 100000,
+          totalCount: 10,
+        },
+        {
+          title: 'Second coupon',
+          code: 'frst2',
+          typeId: CouponTypeEnum.Price,
+          amount: 50000,
+          totalCount: 2,
+        },
+        {
+          title: 'Server coupon',
+          code: 'serv1',
+          typeId: CouponTypeEnum.Server,
+          typeableId: 1,
+          amount: 10,
+          totalCount: 20,
+        },
+        {
+          title: 'Server coupon 3',
+          code: 'serv3',
+          typeId: CouponTypeEnum.Server,
+          typeableId: 3,
+          amount: 15,
+          totalCount: 20,
+        },
+      ])
+      .execute();
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
