@@ -27,7 +27,7 @@ const _servers = [
   new ServerEntity(
     3,
     'Server three',
-    'server-one',
+    'server-three',
     'intel',
     'ddr4',
     'windows server IIS',
