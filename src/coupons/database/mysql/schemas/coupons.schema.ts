@@ -11,7 +11,7 @@ import { Coupon } from '../../../../domains/coupon.domain';
 import { CouponUsersEntity } from './coupon-user.schema';
 import { CouponTypeEnum } from '../../../../domains/enums/coupon-type.enum';
 
-@Entity()
+@Entity('coupons')
 @Index('code_unique', ['code'], { unique: true })
 export class CouponsEntity {
   @PrimaryGeneratedColumn('increment')
@@ -23,25 +23,25 @@ export class CouponsEntity {
   @Column({ type: 'varchar', length: 100, nullable: false })
   code: string;
 
-  @Column({ type: 'bigint', nullable: false })
+  @Column({ type: 'bigint', nullable: false, name: 'type_id' })
   typeId: number;
 
-  @Column({ type: 'bigint', nullable: true })
+  @Column({ type: 'bigint', nullable: true, name: 'typeable_id' })
   typeableId?: number;
 
   @Column({ type: 'bigint', nullable: false, unsigned: true })
   amount: number;
 
-  @Column({ type: 'int', nullable: false })
+  @Column({ type: 'int', nullable: false, name: 'total_count' })
   totalCount: number;
 
-  @Column({ type: 'int', nullable: false, default: 0 })
+  @Column({ type: 'int', nullable: false, default: 0, name: 'used_count' })
   usedCount: number;
 
-  @CreateDateColumn({ type: 'timestamp' })
+  @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamp' })
+  @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })
   updatedAt: Date;
 
   @OneToMany(() => CouponUsersEntity, (x) => x.coupon, {

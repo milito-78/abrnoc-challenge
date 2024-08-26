@@ -11,7 +11,7 @@ import {
   IAccessToken,
 } from '../../../../domains/access_token.domain';
 
-@Entity()
+@Entity('access_tokens' + '')
 @Index('tokens_unique', ['token'], { unique: true })
 export class TokenEntity {
   @PrimaryGeneratedColumn('increment')
@@ -20,16 +20,16 @@ export class TokenEntity {
   @Column({ type: 'varchar', length: 144, nullable: false })
   token: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, name: 'user_id' })
   userId: number;
 
-  @CreateDateColumn({ type: 'timestamp' })
+  @CreateDateColumn({ type: 'timestamp', name: 'expired_at' })
   expiredAt: Date;
 
-  @CreateDateColumn({ type: 'timestamp' })
+  @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamp' })
+  @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })
   updatedAt: Date;
 
   static toDomain(token: TokenEntity): AccessToken {

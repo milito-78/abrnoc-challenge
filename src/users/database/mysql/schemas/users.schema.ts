@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { IUser, User } from '../../../../domains/user.domain';
 
-@Entity()
+@Entity('users')
 @Index('emails_unique', ['email'], { unique: true })
 export class UserEntity {
   @PrimaryGeneratedColumn('increment')
@@ -23,10 +23,10 @@ export class UserEntity {
   @Column({ type: 'varchar', nullable: false })
   password: string;
 
-  @CreateDateColumn({ type: 'timestamp' })
+  @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamp' })
+  @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })
   updatedAt: Date;
 
   static toDomain(user: UserEntity): User {

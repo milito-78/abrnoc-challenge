@@ -16,7 +16,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "./node_modules/typeorm/cli.js",
-    "add-migration": "ts-node ./node_modules/typeorm/cli.js migration:generate -n"
+    "add-migration": "ts-node ./node_modules/typeorm/cli.js migration:generate -n",
+    "migration-run": "yarn build && typeorm migration:run --d ./ormconfig.js && rm -rf dist"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.2",

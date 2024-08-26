@@ -42,7 +42,7 @@ export class CouponsMysqlRepository implements ICouponsProvider {
       .leftJoinAndSelect(
         'cpn.users',
         'usr',
-        'cpn.id = usr.couponId and usr.userId = :usrd',
+        'cpn.id = usr.coupon_id and usr.user_id = :usrd',
         { usrd: userId },
       )
       .getMany();
