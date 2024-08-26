@@ -1,0 +1,55 @@
+version: '3.5'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: coupon-db
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "--silent" ]
+      interval: 5s
+      timeout: 3s
+      retries: 2
+      start_period: 0s
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_NAME: mysql
+    volumes:
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+
+  redis:
+    image: redis:7.2.2
+    container_name: coupon-redis
+    command: redis-server --save "" --appendonly no
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+    volumes:
+      - ./docker/redis:/data
+
+  app:
+    build:
+      args:
+        user: node
+        uid: 1000
+      context: .
+      dockerfile: ./docker/Dockerfile
+    container_name: coupon-app
+    environment:
+      - NODE_ENV=${APP_ENV}
+    ports:
+      - '${HTTP_PORT}:${HTTP_PORT}'
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./src:/app/src
+
